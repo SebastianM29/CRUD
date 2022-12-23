@@ -10,6 +10,7 @@ const doc=document.querySelector('form');
 const desc=document.getElementById('desc');
 const precio=document.getElementById('precio');
 const stock=document.getElementById('stock');
+const total = document.getElementById('totally')
 let opcion='';
 
 
@@ -23,23 +24,38 @@ buttoncreate.addEventListener('click',()=>{
 });
 
 const mostrar = (articulos) => {
+   let totalprecios = 0
+   let totalpreciosPublico = 0
    articulos.forEach(articulo=>{
+      const alPublico = articulo.precio + (articulo.precio*15)/100;
+      const ganancia = alPublico - articulo.precio
+      const PorStock = alPublico*articulo.stock
       resultados += 
       `
       <tr id="fields">
       <td>${articulo.id}</td>
       <td>${articulo.descripcion}</td>
       <td>${articulo.precio}</td>
+      <td>${alPublico}</td>
+      <td>${ganancia.toFixed(2)}</td>
       <td>${articulo.stock}</td>
+      <td>${PorStock}</td>
       <td class="text-center"><a class="btnEditar btn btn-primary">Editar</a><a class="btnBorrar btn btn-danger">Borrar</a></td>
       </tr>
       
       `
+      totalprecios += articulo.precio*articulo.stock;
+      totalpreciosPublico += alPublico*articulo.stock;
    })
    contenedor.innerHTML=resultados
+   
    console.log(contenedor)
+   console.log(totalprecios)
+   total.innerHTML = `<h3> Total de Costo: ${totalprecios} </h3>
+   <h3> Importe total de Venta: ${totalpreciosPublico} </h3>`
 
 }
+
 
 
 
@@ -89,14 +105,14 @@ const fila = e.target.parentNode.parentNode;
 
 let id = fila.firstElementChild.innerHTML;
 console.log(id);
-alertify.confirm("This is a confirm dialog.", async () => {
+alertify.confirm("Desea borrar los datos?", async () => {
    const response = await fetch(`${url}/${id}`,{ method:'DELETE'});
     let final = await response.json()
    
     location.reload();
   },
   function(){
-    alertify.error('Cancel');
+    alertify.error('Dato no borrado');
   });
 })
 //Editar

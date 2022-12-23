@@ -85,3 +85,12 @@ th{
     height: 100%;
 
 }
+#totally  {
+    background-image: url("./img/fondo.jpg");
+   
+}
+#totally h3 {
+text-align: end;
+ color: rgb(227, 43, 129);
+ margin-right: 20px;
+}

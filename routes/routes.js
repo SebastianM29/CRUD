@@ -24,7 +24,10 @@ check('stock','Ingrese stock del producto').trim().not().isEmpty(),
 validationsF
 ]
 ,dataPost);
-router.put('/api/articulos/:id',dataPut)
+router.put('/api/articulos/:id',[
+    check('precio','debe ser con punto').isDecimal({locale:'en-US'}),
+    validationsF
+],dataPut)
 router.delete('/api/articulos/:id',dataDelete)
 
 
